@@ -10,4 +10,4 @@ Use Python 3.10+ and Node.js for development. No packages need to be installed.
 
 Never commit wallet credentials, real API tokens, `.env` files, or hardware logs containing secrets. Keep the bridge bound to loopback. Preserve pause-on-failure behavior when changing control logic.
 
-The UI demo and hardware controller are separate runtime paths. A static UI change cannot directly access a user's local XMRig API. Deploying to Sites is a separate step from pushing to GitHub.
+The UI demo and hardware controller are separate runtime paths. A static UI change cannot directly access a user's local XMRig API. Pushes to main run checks and deploy dist/ to GitHub Pages through .github/workflows/pages.yml.

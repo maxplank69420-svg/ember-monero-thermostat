@@ -1,8 +1,8 @@
 # Ember
 
-**[Open the interactive UI demo](https://ember-monero-thermostat.russet-bull-7151.chatgpt.site)** · [GitHub repository](https://github.com/maxplank69420-svg/ember-monero-thermostat)
+**[Open the interactive UI demo](https://maxplank69420-svg.github.io/ember-monero-thermostat/)** · [GitHub repository](https://github.com/maxplank69420-svg/ember-monero-thermostat)
 
-The Sites demo is deployed with private access and requires the owner’s ChatGPT sign-in. It uses simulated data and never runs a miner in your browser.
+The public GitHub Pages demo uses simulated data and never runs a miner in your browser.
 
 A thermostat-themed Monero heating controller. The hosted app is an interactive demo; real hardware control uses the included local Python bridge. No miner is downloaded, installed, or started by this app.
 
@@ -81,14 +81,15 @@ The demo shows simulated hashrate, heat output, and illustrative temperature his
 
 No build step or package dependencies. `python3 bridge.py` serves `dist/` and the local API. For UI-only preview: `python3 -m http.server 8787 --directory dist --bind 127.0.0.1`.
 
-Run controller tests with `python3 -m unittest -v test_bridge.py`. Static files in `dist/` deploy to Sites; `bridge.py` stays on your mining computer.
+Run controller tests with `python3 -m unittest -v test_bridge.py`. Static files in `dist/` deploy to GitHub Pages; `bridge.py` stays on your mining computer.
 
 
 ## Repository layout
 
 ```text
 .github/workflows/checks.yml  Python controller tests and JS syntax check
-.openai/hosting.json          Existing Sites project and static deployment directory
+.github/workflows/pages.yml   Publish the UI demo to GitHub Pages
+.openai/hosting.json          Legacy Sites deployment configuration
 dist/index.html              App markup
 dist/style.css               Thermostat theme and responsive layout
 dist/app.js                  UI, simulation, history, and local API client
@@ -117,11 +118,15 @@ Node.js is only needed for the JavaScript syntax check. GitHub Actions runs both
 
 The server binds to loopback, validates Host and Origin headers, and rejects non-JSON control requests. Use it on the same computer as the browser. It is not intended to be exposed directly to the internet.
 
-## Sites demo deployment
+## GitHub Pages deployment
 
-The existing Sites project serves `dist/` as a static app, with no build step. `.openai/hosting.json` records its project ID. Hosting runs only the interface; the Python bridge runs on your mining computer. GitHub pushes run checks but do **not** automatically deploy to Sites. Publish updates through the Sites workflow and retain the existing project identity and access settings.
+The public UI demo is hosted at **https://maxplank69420-svg.github.io/ember-monero-thermostat/**.
 
-For your own copy, create a new Sites project and replace the project ID with that project's returned ID before publishing. The original project requires its owner's publishing credentials; none are stored in this repository.
+`.github/workflows/pages.yml` checks the controller and JavaScript, then deploys only `dist/` to GitHub Pages on every push to `main`. It can also be run manually from the Actions tab. There is no build step, package installation, or secret required. The repository's Pages publishing source is **GitHub Actions**.
+
+For your own fork, enable Pages with GitHub Actions in Settings → Pages and run the workflow. Assets use relative URLs so the interface works under a repository subdirectory. Update the demo URL in the README and repository About section for your account.
+
+GitHub Pages hosts the interface only. For live sensor and XMRig control, run the Python bridge on your mining computer and open its local URL. The legacy `.openai/hosting.json` records the earlier Sites preview; it is not used by GitHub Pages.
 
 ## Current limitations
 
